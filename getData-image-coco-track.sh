@@ -2,11 +2,11 @@
 
 source D:/Common_Programs/Anaconda3/Scripts/activate alphapose
 datasetNames=(
-"/fitting_Shelf/ShelfEval00/images/Camera3" "/fitting_Shelf/ShelfEval00/images/Camera4" 
+"/fitting_Campus/CampusEval00/images/Camera0" "/fitting_Campus/CampusEval00/images/Camera1" "/fitting_Campus/CampusEval00/images/Camera2" "/fitting_Campus/CampusEval01/images/Camera0" "/fitting_Campus/CampusEval01/images/Camera1" "/fitting_Campus/CampusEval01/images/Camera2" "/fitting_Shelf/ShelfEval00/images/Camera0" "/fitting_Shelf/ShelfEval00/images/Camera1" "/fitting_Shelf/ShelfEval00/images/Camera2" "/fitting_Shelf/ShelfEval00/images/Camera3" "/fitting_Shelf/ShelfEval00/images/Camera4" 
 )
 for datasetName in "${datasetNames[@]}";
 do
-	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/coco/hrnet/256x192_w32_lr1e-3.yaml --checkpoint pretrained_models/hrnet_w32_256x192.pth --indir E:/Experiments_3DV2021${datasetName} --outdir E:/Experiments_3DV2021/alphapose${datasetName}/" --pose_track)
+	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/coco/hrnet/256x192_w32_lr1e-3.yaml --checkpoint pretrained_models/hrnet_w32_256x192.pth --indir E:/Experiments_3DV2021${datasetName} --outdir E:/Experiments_3DV2021/alphapose${datasetName}/ --pose_track")
 	eval $cmd
 done
 echo "test."

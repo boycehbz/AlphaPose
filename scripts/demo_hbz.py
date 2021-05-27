@@ -8,7 +8,7 @@ sys.path.append('./')
 # sys.argv = ['', '--cfg=configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml', '--checkpoint=pretrained_models/halpe26_fast_res50_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Campus/CampusEval00/images/Camera0', '--outdir=E:/Experiments_3DV2021/fitting_Campus/CampusEval00/alphapose/Camera0/', '--pose_track', '--save_img']
 
 
-sys.argv = ['', '--cfg=configs/coco/hrnet/256x192_w32_lr1e-3.yaml', '--checkpoint=pretrained_models/hrnet_w32_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Shelf/ShelfEval00/images/Camera4', '--outdir=E:/Experiments_3DV2021/alphapose/fitting_Shelf/ShelfEval00/images/Camera4/', '--pose_track', '--save_img']
+# sys.argv = ['', '--cfg=configs/coco/hrnet/256x192_w32_lr1e-3.yaml', '--checkpoint=pretrained_models/hrnet_w32_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Shelf/ShelfEval00/images/Camera4', '--outdir=E:/Experiments_3DV2021/alphapose/fitting_Shelf/ShelfEval00/images/Camera4/', '--pose_track', '--save_img']
 
 import numpy as np
 import torch
