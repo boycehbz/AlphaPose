@@ -6,7 +6,7 @@ datasetNames=(
 )
 for datasetName in "${datasetNames[@]}";
 do
-	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/coco/hrnet/256x192_w32_lr1e-3.yaml --checkpoint pretrained_models/hrnet_w32_256x192.pth --indir E:/Experiments_3DV2021${datasetName} --outdir E:/Experiments_3DV2021/alphapose${datasetName}/ --pose_track")
+	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/coco/hrnet/256x192_w32_lr1e-3.yaml --checkpoint pretrained_models/hrnet_w32_256x192.pth --indir E:/Experiments_3DV2021${datasetName} --outdir E:/Experiments_3DV2021/alphapose${datasetName}/ --pose_flow")
 	eval $cmd
 done
 echo "test."

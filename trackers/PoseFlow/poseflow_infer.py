@@ -121,7 +121,8 @@ class PoseFlowWrapper():
             self.prev_img = img.copy()
             return self.final_result_by_name(frame_name)
 
-        frame_id_list = sorted([(int(os.path.splitext(i)[0]), os.path.splitext(i)[1]) for i in self.track.keys()])
+        frame_id_list = [(os.path.splitext(i)[0], os.path.splitext(i)[1]) for i in self.track.keys()]
+        # frame_id_list = sorted([(int(os.path.splitext(i)[0]), os.path.splitext(i)[1]) for i in self.track.keys()])
         frame_list = [ "".join([str(i[0]), i[1]]) for i in frame_id_list]
         prev_frame_name = frame_list[-2]
         prev_frame_id = prev_frame_name.split(".")[0]
