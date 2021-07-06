@@ -106,7 +106,18 @@ def embedding_distance(tracks, detections, metric='cosine'):
         return cost_matrix
     det_features = np.asarray([track.curr_feat for track in detections], dtype=np.float)
     for i, track in enumerate(tracks):
-        cost_matrix[i, :] = np.maximum(0.0, cdist(track.smooth_feat.reshape(1,-1), det_features, metric))
+        # cost_matrix[i, :] = np.maximum(0.0, cdist(track.smooth_feat.reshape(1,-1), det_features, metric))
+        dist_list = []
+        scores = []
+        for feat, score in zip(track.features, track.scores):
+            dist_list.append(cdist(feat.reshape(1,-1), det_features, metric))
+            scores.append(score)
+        scores = np.array(scores).reshape(-1,1)
+        scores /= np.sum(scores)
+        dist_list = np.concatenate(dist_list)  #np.mean(np.concatenate(dist_list), axis=0)
+        scores = np.tile(scores, dist_list.shape[1])
+        dist_list = np.sum(dist_list * scores, axis=0)
+        cost_matrix[i, :] = np.maximum(0.0, dist_list)
     return cost_matrix
 
 

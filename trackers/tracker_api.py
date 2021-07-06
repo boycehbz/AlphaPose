@@ -40,19 +40,20 @@ class STrack(BaseTrack):
         self.mean, self.covariance = None, None
         self.is_activated = False
 
-        self.score = score
+        self.score = ps
         self.tracklet_len = 0
 
         self.smooth_feat = None
-        self.update_features(temp_feat)
+        self.update_features(temp_feat, ps)
         self.features = deque([], maxlen=buffer_size)
+        self.scores = deque([], maxlen=buffer_size)
         self.alpha = 0.9 
         self.pose = pose
         self.detscore = ps
         self.crop_box = crop_box
         self.file_name = file_name
     
-    def update_features(self, feat):
+    def update_features(self, feat, score):
         feat /= np.linalg.norm(feat)
         self.curr_feat = feat 
         if self.smooth_feat is None:
@@ -60,6 +61,10 @@ class STrack(BaseTrack):
         else:
             self.smooth_feat = self.alpha *self.smooth_feat + (1-self.alpha) * feat
         self.features.append(feat)
+        if score < 0.85:
+            self.scores.append(0.000001)
+        else:
+            self.scores.append(score)
         self.smooth_feat /= np.linalg.norm(self.smooth_feat)
 
     def predict(self):
@@ -99,7 +104,7 @@ class STrack(BaseTrack):
             self.mean, self.covariance, self.tlwh_to_xyah(new_track.tlwh)
         )
 
-        self.update_features(new_track.curr_feat)
+        self.update_features(new_track.curr_feat, new_track.score)
         self.tracklet_len = 0
         self.state = TrackState.Tracked
         self.is_activated = True
@@ -133,7 +138,7 @@ class STrack(BaseTrack):
 
         self.score = new_track.score
         if update_feature:
-            self.update_features(new_track.curr_feat)
+            self.update_features(new_track.curr_feat, new_track.score)
 
     @property
     #@jit(nopython=True)
@@ -230,9 +235,13 @@ class Tracker(object):
         with torch.no_grad():
             feats = self.model(inps).cpu().numpy()
         bboxs = np.asarray(bboxs)
+        hm_scores = np.mean(np.max(pose, axis=(2,3)), axis=1)
+        #print(hm_scores)
         if len(bboxs)>0:
-            detections = [STrack(STrack.tlbr_to_tlwh(tlbrs[:]), 0.9, f,p,c,file_name,ps,30) for
-                          (tlbrs, f,p,c,ps) in zip(bboxs, feats,pose,cropped_boxes,pscores)]
+            detections = [STrack(STrack.tlbr_to_tlwh(tlbrs[:]), 0.9, f,p,c,file_name,ps,60) for
+                          (tlbrs, f,p,c,ps) in zip(bboxs, feats,pose,cropped_boxes,pscores) if ps > 0.8]
+            # detections = [STrack(STrack.tlbr_to_tlwh(tlbrs[:]), 0.9, f,p,c,file_name,ps,60) for
+            #               (tlbrs, f,p,c,ps) in zip(bboxs, feats,pose,cropped_boxes,hm_scores) if ps > 0.8]
         else:
             detections = []
         ''' Add newly detected tracklets to tracked_stracks'''
@@ -297,7 +306,7 @@ class Tracker(object):
         """ Step 4: Init new stracks"""
         for inew in u_detection:
             track = detections[inew]
-            if track.score < self.det_thresh:
+            if track.score < 0.8:
                 continue
             track.activate(self.kalman_filter, self.frame_id)
             activated_starcks.append(track)

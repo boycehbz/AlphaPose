@@ -5,10 +5,10 @@ import platform
 import sys
 import time
 sys.path.append('./')
-# sys.argv = ['', '--cfg=configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml', '--checkpoint=pretrained_models/halpe26_fast_res50_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Campus/CampusEval00/images/Camera0', '--outdir=E:/Experiments_3DV2021/fitting_Campus/CampusEval00/alphapose/Camera0/', '--pose_track', '--save_img']
+# sys.argv = ['', '--cfg=configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml', '--checkpoint=pretrained_models/halpe26_fast_res50_256x192.pth', '--sp', '--indir=D:/Human-Comparisions/EasyMocap/data/doubleB/images/doubleB/Camera11', '--outdir=D:/Human-Comparisions/EasyMocap/data/doubleB/alphapose_tracking/doubleB/Camera11', '--pose_track']
 
 
-# sys.argv = ['', '--cfg=configs/coco/hrnet/256x192_w32_lr1e-3.yaml', '--checkpoint=pretrained_models/hrnet_w32_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Shelf/ShelfEval00/images/Camera4', '--outdir=E:/Experiments_3DV2021/alphapose/fitting_Shelf/ShelfEval00/images/Camera4/', '--pose_flow', '--save_img']
+sys.argv = ['', '--cfg=configs/coco/hrnet/256x192_w32_lr1e-3.yaml', '--checkpoint=pretrained_models/hrnet_w32_256x192.pth', '--sp', '--indir=E:/HumanData-Source/Campus-old/images/Camera00', '--outdir=E:/HumanData-Source/Campus-old/alphapose/Camera00/', '--pose_track']
 
 import numpy as np
 import torch
@@ -225,6 +225,7 @@ if __name__ == "__main__":
         im_names_desc = tqdm(range(data_len), dynamic_ncols=True)
 
     batchSize = args.posebatch
+    track_lists = []
     if args.flip:
         batchSize = int(batchSize / 2)
     try:
@@ -258,11 +259,28 @@ if __name__ == "__main__":
                         hm_j = (hm_j[0:int(len(hm_j) / 2)] + hm_j_flip) / 2
                     hm.append(hm_j)
                 hm = torch.cat(hm)
+                track_lists.append([inps[0][None],boxes[0][None],hm[0][None],cropped_boxes[0][None],scores[0][None]])
                 if args.profile:
                     ckpt_time, pose_time = getTime(ckpt_time)
                     runtime_profile['pt'].append(pose_time)
                 if args.pose_track:
                     boxes,scores,ids,hm,cropped_boxes = track(tracker,args,orig_img,inps,boxes,hm,cropped_boxes,im_name,scores)
+                    # t_inp = inps[1][None]
+                    # t_box = boxes[1][None]
+                    # t_hm = hm[1][None]
+                    # t_crop = cropped_boxes[1][None]
+                    # t_score = scores[1][None]
+                    # id_list = []
+                    # for idx, items in enumerate(track_lists):
+                    #     t_inps = torch.cat([items[0], t_inp], dim=0)
+                    #     t_boxs = torch.cat([items[1], t_box], dim=0)
+                    #     t_hms = torch.cat([items[2], t_hm], dim=0)
+                    #     t_crops = torch.cat([items[3], t_crop], dim=0)
+                    #     t_scores = torch.cat([items[4], t_score], dim=0)
+
+                    #     boxes,scores,ids_,hm,cropped_boxes = track(tracker,args,orig_img,t_inps,t_boxs,t_hms,t_crops,im_name,t_scores)
+                    #     id_list.append(ids_)
+                
                 hm = hm.cpu()
                 writer.save(boxes, scores, ids, hm, cropped_boxes, orig_img, im_name)
                 if args.profile:

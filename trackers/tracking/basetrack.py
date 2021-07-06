@@ -18,6 +18,7 @@ class BaseTrack(object):
 
     history = OrderedDict()
     features = []
+    scores = []
     curr_feature = None
     score = 0
     start_frame = 0

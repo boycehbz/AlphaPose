@@ -2,11 +2,11 @@
 
 source D:/Common_Programs/Anaconda3/Scripts/activate alphapose
 datasetNames=(
-"/TS1/imageSequence" "/TS2/imageSequence" "/TS3/imageSequence" "/TS4/imageSequence" "/TS5/imageSequence" "/TS6/imageSequence" 
+"/Camera00" "/Camera01" "/Camera02" "/Camera03" "/Camera04" "/Camera05" "/Camera06" "/Camera07" "/Camera08" "/Camera09" "/Camera10" "/Camera11" "/Camera12" "/Camera13" "/Camera14" "/Camera15" "/Camera16" "/Camera17" "/Camera18" "/Camera19" "/Camera20" "/Camera21" "/Camera22" "/Camera23" "/Camera24" "/Camera25" "/Camera26" "/Camera27" "/Camera28" "/Camera29" "/Camera30" 
 )
 for datasetName in "${datasetNames[@]}";
 do
-	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/coco/hrnet/256x192_w32_lr1e-3.yaml --checkpoint pretrained_models/hrnet_w32_256x192.pth --indir E:/Human-evaluation-v1.0/MPI3DHP/testset${datasetName} --outdir E:/Human-evaluation-v1.0/MPI3DHP/alphapose${datasetName}/ --pose_track")
+	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint pretrained_models/halpe26_fast_res50_256x192.pth --indir D:/Human-Comparisions/EasyMocap/data/Panoptic/images${datasetName} --outdir D:/Human-Comparisions/EasyMocap/data/Panoptic/alphapose${datasetName}/ --pose_track")
 	eval $cmd
 done
 echo "test."
