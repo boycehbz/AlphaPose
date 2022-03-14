@@ -21,8 +21,8 @@ class DetectionLoader():
 
         if mode == 'image':
             self.img_dir = opt.inputpath
-            self.imglist = [os.path.join(self.img_dir, im_name.rstrip('\n').rstrip('\r')) for im_name in input_source]
-            self.datalen = len(input_source)
+            self.imglist = [os.path.join(self.img_dir, im_name.rstrip('\n').rstrip('\r')) for im_name in input_source if im_name.split('.')[1] in ['png', 'jpg']]
+            self.datalen = len(self.imglist)
         elif mode == 'video':
             stream = cv2.VideoCapture(input_source)
             assert stream.isOpened(), 'Cannot capture source'

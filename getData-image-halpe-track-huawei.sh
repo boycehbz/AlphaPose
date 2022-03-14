@@ -2,16 +2,11 @@
 
 source D:/Common_Programs/Anaconda3/Scripts/activate alphapose
 datasetNames=(
-"/samples/sample13" 
+"demo1" "demo2" "demo3" 
 )
 for datasetName in "${datasetNames[@]}";
 do
-	cmd=$(printf "python scripts/demo_hbz.py\
-	--cfg configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml\
-	--checkpoint pretrained_models/halpe26_fast_res50_256x192.pth\
-	--indir //105.1.1.106/e/ECCV2022-HMAE-experiments/Internet1/images${datasetName}\
-	--outdir //105.1.1.106/e/ECCV2022-HMAE-experiments/Internet1/alphapose_results${datasetName}/\
-	--pose_track")
+	cmd=$(printf "python scripts/demo_hbz.py --cfg configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint pretrained_models/halpe26_fast_res50_256x192.pth --indir D:/Human-Comparisions/VIBE/huawei_demo/${datasetName} --outdir D:/Human-Comparisions/VIBE/huawei_demo/alphapose_results/${datasetName}/ --pose_track")
 	eval $cmd
 done
 echo "test."
