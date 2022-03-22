@@ -2,15 +2,15 @@
 
 source D:/Common_Programs/Anaconda3/Scripts/activate alphapose
 datasetNames=(
-"/BS_20220318_02_02_FCM21121394" "/BS_20220318_02_02_FCM21121395" "/BS_20220318_02_02_FCM22030165" 
+"/0000/Camera00" "/0000/Camera01" "/0000/Camera02" "/0000/Camera03" "/0000/Camera04" "/0034/Camera00" "/0034/Camera01" "/0034/Camera02" "/0034/Camera03" "/0034/Camera04" "/0052/Camera00" "/0052/Camera01" "/0052/Camera02" "/0052/Camera03" "/0052/Camera04" 
 )
 for datasetName in "${datasetNames[@]}";
 do
 	cmd=$(printf "python scripts/demo_hbz.py\
-	--cfg configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml\
-	--checkpoint pretrained_models/halpe26_fast_res50_256x192.pth\
-	--indir //105.1.1.2/BodyStudio/test${datasetName}\
-	--outdir //105.1.1.2/BodyStudio/test/alphapose_results${datasetName}/\
+	--cfg configs/halpe_136/resnet/256x192_res50_lr1e-3_2x-dcn-combined.yaml\
+	--checkpoint pretrained_models/multi_domain_fast50_dcn_combined_256x192.pth\
+	--indir E:/GPA-testset/images${datasetName}\
+	--outdir E:/GPA-testset/alphapose_results${datasetName}/\
 	--pose_track")
 	eval $cmd
 done

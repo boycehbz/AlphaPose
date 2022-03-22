@@ -10,6 +10,10 @@ sys.path.append('./')
 # '--outdir=//105.1.1.106/e/ECCV2022-HMAE-experiments/Internet1/alphapose_results/samples/sample19',
 #  '--pose_track']
 
+# sys.argv = ['', '--cfg=configs/halpe_136/resnet/256x192_res50_lr1e-3_2x-dcn-combined.yaml', '--checkpoint=pretrained_models/multi_domain_fast50_dcn_combined_256x192.pth', '--sp', 
+# '--indir=E:/GPA7002/GPAImg/test/0000/camera00', 
+# '--outdir=E:/GPA7002/alphapose/test/0000/camera00',
+#  '--pose_track', '--save_img']
 
 # sys.argv = ['', '--cfg=configs/coco/hrnet/256x192_w32_lr1e-3.yaml', '--checkpoint=pretrained_models/hrnet_w32_256x192.pth', '--sp', '--indir=E:/Experiments_3DV2021/fitting_Shelf/ShelfEval00/images/Camera4', '--outdir=E:/Experiments_3DV2021/alphapose/fitting_Shelf/ShelfEval00/images/Camera4/', '--pose_flow', '--save_img']
 
