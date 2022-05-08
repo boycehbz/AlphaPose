@@ -2,15 +2,15 @@
 
 source D:/Common_Programs/Anaconda3/Scripts/activate alphapose
 datasetNames=(
-"/0000/Camera00" "/0000/Camera01" "/0000/Camera02" "/0000/Camera03" "/0000/Camera04" "/0034/Camera00" "/0034/Camera01" "/0034/Camera02" "/0034/Camera03" "/0034/Camera04" "/0052/Camera00" "/0052/Camera01" "/0052/Camera02" "/0052/Camera03" "/0052/Camera04" 
+"/vicon_03301_01/Camera00" "/vicon_03301_02/Camera00" "/vicon_03301_03/Camera00" "/vicon_03301_04/Camera00" "/vicon_03301_05/Camera00" "/vicon_03301_06/Camera00" "/vicon_03301_07/Camera00" "/vicon_03301_08/Camera00" "/vicon_03301_09/Camera00" "/vicon_03301_10/Camera00" "/vicon_03301_11/Camera00" "/vicon_03301_12/Camera00" "/vicon_03301_13/Camera00" "/vicon_03301_14/Camera00" "/vicon_03301_15/Camera00" "/vicon_03301_16/Camera00" "/vicon_03301_17/Camera00" "/vicon_03301_18/Camera00" 
 )
 for datasetName in "${datasetNames[@]}";
 do
 	cmd=$(printf "python scripts/demo_hbz.py\
 	--cfg configs/halpe_136/resnet/256x192_res50_lr1e-3_2x-dcn-combined.yaml\
 	--checkpoint pretrained_models/multi_domain_fast50_dcn_combined_256x192.pth\
-	--indir E:/GPA-testset/images${datasetName}\
-	--outdir E:/GPA-testset/alphapose_results${datasetName}/\
+	--indir //SEUVCL-DATA-02/Body/Human-Data-Physics-v2.0/PROX/images${datasetName}\
+	--outdir //SEUVCL-DATA-02/Body/Human-Data-Physics-v2.0/PROX/alphapose_results${datasetName}/\
 	--pose_track")
 	eval $cmd
 done
