@@ -545,7 +545,7 @@ def p_merge_fast(ref_pose, cluster_preds, cluster_scores, ref_dist):
     dist = torch.sqrt(torch.sum(
         torch.pow(ref_pose[np.newaxis, :] - cluster_preds, 2),
         dim=2
-    ))
+    )).to(torch.float64)
 
     kp_num = ref_pose.size()[0]
     ref_dist = min(ref_dist, 15)

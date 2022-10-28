@@ -6,9 +6,13 @@ import sys
 import time
 sys.path.append('./')
 # sys.argv = ['', '--cfg=configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml', '--checkpoint=pretrained_models/halpe26_fast_res50_256x192.pth', '--sp', 
-# '--indir=//105.1.1.106/e/ECCV2022-HMAE-experiments/Internet1/images/samples/sample19', 
-# '--outdir=//105.1.1.106/e/ECCV2022-HMAE-experiments/Internet1/alphapose_results/samples/sample19',
-#  '--pose_track']
+# '--indir=//105.1.1.110/d/Jujingyi_Programs/CVPR2023/dataset/detect_results/images', 
+# '--outdir=//105.1.1.110/d/Jujingyi_Programs/CVPR2023/dataset/detect_results/test',
+#  '--pose_track', '--save_img']
+
+sys.argv = ['', '--cfg=configs/halpe_26/resnet/256x192_res50_lr1e-3_1x.yaml', '--checkpoint=pretrained_models/halpe26_fast_res50_256x192.pth', '--sp', 
+'--detfile=//105.1.1.103/f/Human-Training-v3.7/JTA/annot/bbox_test.json', 
+'--outdir=//105.1.1.103/f/Human-Training-v3.7/JTA/annot',]
 
 # sys.argv = ['', '--cfg=configs/halpe_136/resnet/256x192_res50_lr1e-3_2x-dcn-combined.yaml', '--checkpoint=pretrained_models/multi_domain_fast50_dcn_combined_256x192.pth', '--sp', 
 # '--indir=//SEUVCL-DATA-02/Body/Human-Data-Physics-v2.0/PROX/images/vicon_03301_01/Camera00', 
@@ -31,6 +35,7 @@ from trackers import track
 from alphapose.models import builder
 from alphapose.utils.config import update_config
 from alphapose.utils.detector import DetectionLoader
+from alphapose.utils.file_detector import FileDetectionLoader
 from alphapose.utils.transforms import flip, flip_heatmap
 from alphapose.utils.vis import getTime
 from alphapose.utils.webcam_detector import WebCamDetectionLoader
